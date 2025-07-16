@@ -2,7 +2,7 @@ library(dplyr)
 library(survival)
 library(stringr)
 
-all_file_paths <- "D:\\work2\\t2dAndComplicationsUkb\\data\\processed\\vifLassoCox" %>%
+all_file_paths <- "D:\\work2\\t2dAndComplicationsUkb\\data\\processed\\LassoCox" %>%
   list.files(path = ., pattern = ".*", full.names = TRUE, recursive = TRUE)
 compIndex <- which(str_detect(all_file_paths, "Comp.rds"))
 comp_path <- all_file_paths[compIndex]
@@ -10,7 +10,7 @@ comp_path <- all_file_paths[compIndex]
 PIDgroup <- "D:\\work2\\t2dAndComplicationsUkb\\data\\processed\\grouping\\PIDgroup.rds" %>%
   readRDS(.)
 
-trait3 <- "D:\\work2\\t2dAndComplicationsUkb\\data\\processed\\preprocess\\trait2_abbr_ethnic.rds" %>%
+trait3 <- "D:\\work2\\t2dAndComplicationsUkb\\data\\processed\\processed\\trait2_abbr_ethnic.rds" %>%
   readRDS(.)
 
 trait3 <- merge(PIDgroup[PIDgroup$group=="train_set", ], trait3, by= "PID")
