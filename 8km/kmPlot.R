@@ -16,7 +16,7 @@ intersect_paths <- "D:\\work2\\t2dAndComplicationsUkb\\data\\processed\\ImpAUCRO
 
 PIDgroup <- "D:\\work2\\t2dAndComplicationsUkb\\data\\processed\\grouping\\PIDgroup.rds" %>%
   readRDS(.)
-trait3 <- "D:\\work2\\t2dAndComplicationsUkb\\data\\processed\\preprocess\\trait2_abbr_ethnic.rds" %>%
+trait3 <- "D:\\work2\\t2dAndComplicationsUkb\\data\\processed\\processed\\trait2_abbr_ethnic.rds" %>%
   readRDS(.)
 trait3 <- merge(PIDgroup[PIDgroup$group=="test_set", ], trait3, by= "PID")
 trait3 <- trait3[, -2]
@@ -32,7 +32,7 @@ abbrMapDf <- data.frame(
   name=c("DCVD", "DR", "Total complications", "Macrovascular", "Metabolic Disorder", "Microvascular", "DN", "DPVD", "DKD")
 )
 
-cutoffDf <- data.frame(trait=NA, comp=NA, cutoff=NA, HR=NA, low=NA, high=NA, Pvalue=NA)
+cutoffDf <- data.frame(trait=NA, comp=NA, cutoff=NA, HR=NA, low=NA, high=NA, Pvalue=NA, Low_n=NA, High_n=NA)
 for (i in 1:length(comps_paths)) {
   comp <- comps_paths[i] %>% readRDS(.)
   compTra <- merge(comp, trait3, by.x = "Participant.ID", by.y = "PID")
@@ -151,7 +151,10 @@ for (i in 1:length(comps_paths)) {
           coef["binaryVarHigh", "exp(coef)"],
           coef["binaryVarHigh", "conf.low"],
           coef["binaryVarHigh", "conf.high"],
-          coef["binaryVarHigh", "Pr(>|z|)"]))
+          coef["binaryVarHigh", "Pr(>|z|)"],
+          table(compTra2$binaryVar)
+          )
+        )
     }
   }
 }
